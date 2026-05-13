@@ -1,0 +1,17 @@
+# Dependency directories (התיקיות הכבדות שנוצרות אוטומטית)
+node_modules/
+
+# Environment variables (קבצים עם סיסמאות ופרטים סודיים)
+.env
+
+# Debug logs (קבצי שגיאות שנוצרים בזמן ריצה)
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Operating system files (קבצי מערכת מיותרים)
+.DS_Store
+Thumbs.db
+
+# IDE settings (הגדרות אישיות של VS Code)
+.vscode/
