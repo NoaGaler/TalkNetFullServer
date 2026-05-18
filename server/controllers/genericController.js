@@ -2,7 +2,7 @@ const GenericModel = require('../models/genericModel');
 
 // אובייקט אחד מרכזי שמאגד את כל פעולות השרת הגנריות
 const GenericController = {
-    
+
     // 1. הבאת כל הנתונים מהטבלה (או סינון מורכב דרך URL query)
     getAll: async (req, res) => {
         try {
@@ -53,6 +53,94 @@ const GenericController = {
         } catch (err) {
             console.error("Database error in generic create:", err);
             res.status(500).json({ error: "Server error creating item" });
+        }
+    },
+
+    // הוסיפי את הפונקציה הזו בתוך האובייקט GenericController ב-genericController.js
+    delete: async (req, res) => {
+        try {
+            const table = req.params.table; // שם הטבלה (למשל: posts)
+            const id = req.params.id;       // ה-ID של הפריט שרוצים למחוק
+            const { current_user_id } = req.body; // הריאקט ישלח בגוף הבקשה את ה-ID של המשתמש המחובר כעת
+
+            // אבטחה שלב א': וודאי שהריאקט בכלל שלח את ה-ID של המשתמש הנוכחי
+            if (!current_user_id) {
+                return res.status(400).json({ error: "Missing current_user_id for authentication" });
+            }
+
+            // אבטחה שלב ב': שולפים את הפריט הקיים מהדאטאבייס כדי לבדוק למי הוא שייך
+            const existingItems = await GenericModel.getAll(table, { id: id });
+
+            // אם הפריט לא קיים בכלל בדאטאבייס
+            if (existingItems.length === 0) {
+                return res.status(404).json({ error: "Item not found" });
+            }
+
+            const itemInDb = existingItems[0];
+
+            // אבטחה שלב ג': הצלבת נתונים! בודקים האם ה-user_id של הפריט בדאטאבייס שווה ל-ID של מי שמנסה למחוק
+            // שימי לב: אנחנו ממירים את שניהם ל-String למקרה שאחד הגיע כמספר ואחד כטקסט
+            if (String(itemInDb.user_id) !== String(current_user_id)) {
+                // אם ה-ID לא תואם - חוסמים את הפעולה מיד עם סטטוס 403 (Forbidden)
+                return res.status(403).json({ error: "Access denied. You can only delete your own items!" });
+            }
+
+            // אם עברנו את כל הבדיקות - המשתמש הוא באמת הבעלים! אפשר למחוק בבטחה
+            const isDeleted = await GenericModel.delete(table, id);
+
+            if (isDeleted) {
+                res.json({ message: "Item deleted successfully!" });
+            } else {
+                res.status(404).json({ error: "Item could not be deleted" });
+            }
+
+        } catch (err) {
+            console.error("Database error in generic delete:", err);
+            res.status(500).json({ error: "Server error deleting item" });
+        }
+    },
+
+    // הוסיפי את הפונקציה הזו בתוך האובייקט GenericController ב-genericController.js
+    update: async (req, res) => {
+        try {
+            const table = req.params.table; // שם הטבלה (למשל: posts)
+            const id = req.params.id;       // ה-ID של הפריט שרוצים לעדכן
+
+            // מפרידים את ה-ID של המשתמש לצורך אבטחה, ושומרים את שאר השדות לעדכון
+            const { current_user_id, ...fieldsToUpdate } = req.body;
+
+            // אבטחה שלב א': וודאי שהריאקט שלח את ה-ID של המשתמש הנוכחי
+            if (!current_user_id) {
+                return res.status(400).json({ error: "Missing current_user_id for authentication" });
+            }
+
+            // אבטחה שלב ב': שולפים את הפריט הקיים מהדאטאבייס כדי לבדוק בעלות
+            const existingItems = await GenericModel.getAll(table, { id: id });
+
+            if (existingItems.length === 0) {
+                return res.status(404).json({ error: "Item not found" });
+            }
+
+            const itemInDb = existingItems[0];
+
+            // אבטחה שלב ג': הצלבת נתונים - רק בעל הרשומה יכול לערוך!
+            if (String(itemInDb.user_id) !== String(current_user_id)) {
+                return res.status(403).json({ error: "Access denied. You can only edit your own items!" });
+            }
+
+            // אם עברנו את האבטחה - מעדכנים את הדאטאבייס רק בשדות שהשתנו (PATCH קלאסי)
+            const isUpdated = await GenericModel.update(table, id, fieldsToUpdate);
+
+            if (isUpdated) {
+                // מחזירים תשובה חיובית עם השדות שעדכנו
+                res.json({ message: "Item updated successfully!", updatedFields: fieldsToUpdate });
+            } else {
+                res.status(400).json({ error: "No changes were made or item could not be updated" });
+            }
+
+        } catch (err) {
+            console.error("Database error in generic update:", err);
+            res.status(500).json({ error: "Server error updating item" });
         }
     }
 };

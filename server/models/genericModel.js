@@ -32,6 +32,26 @@ const GenericModel = {
 
         // מחזירים אובייקט חדש שמכיל את ה-ID שנוצר בדאטאבייס יחד עם כל הנתונים המקוריים
         return { id: result.insertId, ...data };
+    },
+
+    delete: async (table, id) => {
+        // שאילתת מחיקה שמבוססת על שם טבלה דינמי ו-ID ספציפי
+        const sql = `DELETE FROM ?? WHERE id = ?`;
+
+        const [result] = await db.query(sql, [table, id]);
+
+        // מחזירים true אם באמת נמחקה שורה בדאטאבייס
+        return result.affectedRows > 0;
+    },
+
+    update: async (table, id, data) => {
+        // השאילתה משתמשת ב-?? עבור שם הטבלה, ב-? הראשון עבור אובייקט הנתונים (SET שדה=ערך) וב-? השני עבור ה-ID
+        const sql = `UPDATE ?? SET ? WHERE id = ?`;
+
+        const [result] = await db.query(sql, [table, data, id]);
+
+        // מחזירים true אם באמת עודכנה שורה בדאטאבייס
+        return result.affectedRows > 0;
     }
 
 };
