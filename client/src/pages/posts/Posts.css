@@ -1,0 +1,419 @@
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.07);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --accent-purple: #a29bfe;
+    --accent-cyan: #81ecec;
+    --danger: #ff7675;
+    --text-main: #f1f2f6;
+    --text-dim: #b2bec3;
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.postsContainer {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.postsToolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    margin-bottom: 30px;
+    background: var(--glass-bg);
+    padding: 20px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+}
+
+.searchGroup {
+    flex-grow: 1;
+}
+
+.addBtn {
+    background: linear-gradient(135deg, var(--accent-purple), #6c5ce7);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+    transition: all 0.3s ease;
+}
+
+.addBtn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+.postRow {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    margin-bottom: 20px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: var(--glass-shadow);
+    overflow: hidden;
+}
+
+.postRow:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.postSummary {
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 20px;
+}
+
+.postId {
+    background: var(--accent-purple);
+    color: #1a1a2e;
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 0.85rem;
+}
+
+.postTitle {
+    color: var(--text-main);
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.ownerBadge {
+    margin-right: 8px;
+} 
+
+.postDetails {
+    padding: 0 25px 25px 25px;
+    border-top: 1px solid var(--glass-border);
+    animation: fadeIn 0.5s ease;
+}
+
+.postBody {
+    color: var(--text-dim);
+    line-height: 1.8;
+    font-size: 1.05rem;
+    margin: 20px 0;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+}
+
+.postActions {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 20px 0;
+}
+
+.actionBtn {
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    transition: 0.3s;
+}
+
+.actionBtn:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.deleteBtn:hover {
+    background: rgba(255, 118, 117, 0.2);
+    color: var(--danger);
+    border-color: var(--danger);
+}
+
+.commentsBtn {
+    background: var(--accent-purple);
+    color: #1a1a2e;
+    font-weight: 600;
+    border: none;
+}
+
+.commentsBtn:hover {
+    background: var(--accent-cyan);
+}
+
+.commentsSection {
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.commentCard {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    border-left: 3px solid var(--accent-cyan);
+}
+
+.commentHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+}
+
+.commentEmail {
+    color: var(--accent-cyan);
+    opacity: 0.8;
+}
+
+.commentBody {
+    color: var(--text-main);
+    line-height: 1.5;
+}
+
+.commentActions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.commentActions button {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--glass-border);
+    color: white;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.commentActions button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--accent-cyan);
+}
+
+.addCommentForm {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.addCommentForm input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 12px 15px;
+    color: white;
+    outline: none;
+}
+
+.addCommentForm button {
+    background: var(--accent-cyan);
+    color: #1a1a2e;
+    border: none;
+    padding: 0 20px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent.postModal {
+    background: rgba(30, 30, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    padding: 30px;
+    width: 500px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+.modalInput,
+.modalTextArea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: white;
+    padding: 12px;
+    margin-bottom: 15px;
+    font-family: inherit;
+    outline: none;
+}
+
+.modalTextArea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.modalActions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.confirmBtn {
+    background: var(--accent-purple);
+    color: #1a1a2e;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.cancelBtn {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid var(--glass-border);
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.editCommentArea {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 10px 0;
+    width: 100%;
+}
+
+.editCommentArea textarea {
+    width: 100%;
+    min-height: 80px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: white;
+    padding: 10px;
+    font-family: inherit;
+    outline: none;
+    resize: vertical;
+}
+
+.editCommentActions {
+    display: flex;
+    gap: 8px;
+}
+
+.editCommentActions button {
+    padding: 6px 15px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: 0.2s;
+}
+
+.editCommentActions button:first-child:hover {
+    background: var(--accent-cyan, #81ecec);
+    color: #1a1a2e;
+}
+
+.editCommentActions button:last-child:hover {
+    background: rgba(255, 118, 117, 0.2);
+    color: var(--danger, #ff7675);
+}
+
+.postSummary {
+    padding: 20px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.expandWrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+}
+
+.expandBtn {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.postHeaderContent {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+}
+
+.expandBtn {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+}
+
+
+.ownerBadge {
+    font-size: 2rem;
+    opacity: 0.6;
+    user-select: none;
+
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
